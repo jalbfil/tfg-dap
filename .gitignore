@@ -1,0 +1,30 @@
+# Python / venv / bytecode
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Entornos y secretos
+.env
+keys/
+*.pem
+
+# SQLite y artefactos locales
+*.sqlite3
+dap.sqlite3
+.pytest_tmp/
+.coverage
+coverage.xml
+
+# Distribuciones / builds
+build/
+dist/
+*.egg-info/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
