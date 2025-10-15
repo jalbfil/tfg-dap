@@ -7,6 +7,8 @@ MVP de **pasaporte digital de atleta** (DAP) para eventos HYROX:
 
 > ✅ Repo reproducible: los **tests** generan claves RSA efímeras y usan una **BD temporal**.  
 > No necesitas `.env` ni `keys/` para ejecutar `pytest`.
+>
+> [![tests](https://github.com/jalbfil/tfg-dap/actions/workflows/tests.yml/badge.svg)](https://github.com/jalbfil/tfg-dap/actions/workflows/tests.yml)
 
 ---
 
@@ -34,3 +36,4 @@ mkdir keys
 
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
+
