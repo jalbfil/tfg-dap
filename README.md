@@ -37,4 +37,14 @@ mkdir keys
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
 
+## Verificación por `did:web` 
+
+Además de validar por clave PEM local, el verificador puede resolver la clave del emisor desde un DID Document `did:web`.
+
+- **DID** del emisor (ejemplo): `did:web:jalbfil.github.io`
+- **DID Document**: `https://jalbfil.github.io/.well-known/did.json`
+
+### Activarlo
+1. Establece en `.env`:
+
 
