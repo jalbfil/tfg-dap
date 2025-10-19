@@ -14,7 +14,7 @@ MVP de **pasaporte digital de atleta** (DAP) para eventos HYROX:
 
 ## 1) Requisitos
 
-- **Python 3.13** (con `pip` y `venv`)
+- **Python 3.10+** (con `pip` y `venv`)
 - Windows/PowerShell (o cualquier SO con Python 3.13)
 
 ---
@@ -36,4 +36,5 @@ mkdir keys
 
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
+
 
