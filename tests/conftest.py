@@ -2,6 +2,7 @@
 import os
 import sys
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -13,6 +14,7 @@ if str(ROOT) not in sys.path:
 # --- Generación de claves efímeras (RSA 2048) ---
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+
 
 def _generate_ephemeral_keys(keys_dir: Path) -> tuple[Path, Path]:
     keys_dir.mkdir(parents=True, exist_ok=True)
@@ -33,6 +35,7 @@ def _generate_ephemeral_keys(keys_dir: Path) -> tuple[Path, Path]:
 
     return (keys_dir / "issuer_private.pem"), (keys_dir / "issuer_public.pem")
 
+
 def _prepare_test_env() -> None:
     tmp = (ROOT / ".pytest_tmp").absolute()
     tmp.mkdir(exist_ok=True)
@@ -51,6 +54,7 @@ def _prepare_test_env() -> None:
     os.environ["ISSUER_PRIVATE_KEY_PATH"] = priv_path.as_posix()
     os.environ["ISSUER_PUBLIC_KEY_PATH"]  = pub_path.as_posix()
 
+
 @pytest.fixture(scope="session")
 def client():
     """
@@ -64,3 +68,12 @@ def client():
     # Con 'with' forzamos lifespan: crea tablas en startup y cierra engine en shutdown
     with TestClient(app) as c:
         yield c
+
+
+# --- Reset de settings después de cada test (autouse) ---
+@pytest.fixture(autouse=True)
+def _reset_settings_between_tests():
+    from app.core.config import settings
+    snapshot = (settings.use_did_web, settings.allow_pem_fallback, settings.issuer_did)
+    yield
+    settings.use_did_web, settings.allow_pem_fallback, settings.issuer_did = snapshot
