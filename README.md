@@ -38,17 +38,3 @@ mkdir keys
 # 4) Lanza la API
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
-
-## Verificación por `did:web` (opcional)
-Además de validar con clave PEM local, el verificador puede resolver la JWK pública desde un DID Document `did:web`.
-
-1) Publica tu DID:
-   - `did:web:jalbfil.github.io` → `https://jalbfil.github.io/.well-known/did.json`
-2) Configura `.env`:
-ISSUER_DID=did:web:jalbfil.github.io
-USE_DID_WEB=true
-ALLOW_PEM_FALLBACK=true
-
-3) Re-emite credenciales y verifica (`/verifier/verify` o `/verifier/scan`).
-
-> Si la red falla o no hay `did.json` y `ALLOW_PEM_FALLBACK=true`, se usa la clave PEM local.
