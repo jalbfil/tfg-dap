@@ -1,17 +1,21 @@
-﻿from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from sqlalchemy import select
+
 from app.core.crypto import verify_vc
 from app.db.session import SessionLocal
 from app.db.models import Credential
 
 router = APIRouter()
 
+
 class VerifyInput(BaseModel):
     token: str
 
+
 @router.post("/verify")
 async def verify_token(body: VerifyInput):
+    # verify_vc ya intenta did:web si está activado y hace fallback a PEM si procede
     res = verify_vc(body.token)
     if not res["valid"]:
         return {"valid": False, "reason": res.get("reason", "invalid")}
@@ -36,9 +40,10 @@ async def verify_token(body: VerifyInput):
             "jti": jti,
             "iss": payload.get("iss"),
             "sub": payload.get("sub"),
-            "exp": payload.get("exp")
-        }
+            "exp": payload.get("exp"),
+        },
     }
+
 
 @router.get("/scan")
 async def scan_by_jti(jti: str = Query(...)):
@@ -50,8 +55,17 @@ async def scan_by_jti(jti: str = Query(...)):
 
     res = verify_vc(token)
     if not res["valid"]:
-        return {"valid": False, "reason": res.get("reason","invalid")}
+        return {"valid": False, "reason": res.get("reason", "invalid")}
     if dbcred.status != "valid":
         return {"valid": False, "reason": f"status={dbcred.status}"}
+
     payload = res["payload"]
-    return {"valid": True, "claims": {"jti": jti, "iss": payload.get("iss"), "sub": payload.get("sub"), "exp": payload.get("exp")}}
+    return {
+        "valid": True,
+        "claims": {
+            "jti": jti,
+            "iss": payload.get("iss"),
+            "sub": payload.get("sub"),
+            "exp": payload.get("exp"),
+        },
+    }
