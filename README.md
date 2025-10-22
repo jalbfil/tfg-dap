@@ -1,4 +1,5 @@
 # TFG-DAP · HYROX MVP (FastAPI + SQLite + JWT/RS256)
+![tests](https://github.com/jalbfil/tfg-dap/actions/workflows/ci.yml/badge.svg)
 
 MVP de **pasaporte digital de atleta (DAP)** para eventos HYROX:
 - **Issuer**: emite credenciales firmadas (VC-JWT/RS256).
@@ -11,7 +12,6 @@ MVP de **pasaporte digital de atleta (DAP)** para eventos HYROX:
 ---
 
 ## 1) Requisitos
-
 - **Python 3.10+** (probado en 3.10 y 3.13)
 - `pip` y `venv` instalados
 
@@ -38,9 +38,3 @@ mkdir keys
 # 4) Lanza la API
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
-
-# DID document
-DID del emisor: `did:web:jalbfil.github.io`  
-DID Document: https://jalbfil.github.io/.well-known/did.json
-![tests](https://github.com/jalbfil/tfg-dap/actions/workflows/ci.yml/badge.svg)
-
