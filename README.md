@@ -38,3 +38,9 @@ mkdir keys
 # 4) Lanza la API
 python -m uvicorn app.main:app --reload
 # Swagger: http://127.0.0.1:8000/docs
+
+# DID document
+DID del emisor: `did:web:jalbfil.github.io`  
+DID Document: https://jalbfil.github.io/.well-known/did.json
+![tests](https://github.com/jalbfil/tfg-dap/actions/workflows/ci.yml/badge.svg)
+
